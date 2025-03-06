@@ -20,7 +20,7 @@
             display: block;
             margin-bottom: 5px;
         }
-        .input-group input {
+        .input-group input, .input-group select {
             width: 100%;
             padding: 8px;
             box-sizing: border-box;
@@ -76,27 +76,35 @@
         
         <div class="input-group">
             <label for="broker">MQTT Broker:</label>
-            <input type="text" id="broker" placeholder="例如: ws://broker.hivemq.com:8000/mqtt">
+            <input type="text" id="broker" value="mqtt.easylot.cn">
+        </div>
+
+        <div class="input-group">
+            <label for="port">端口:</label>
+            <select id="port">
+                <option value="1883">1883 (非加密)</option>
+                <option value="8883">8883 (加密)</option>
+            </select>
         </div>
 
         <div class="input-group">
             <label for="clientId">Client ID:</label>
-            <input type="text" id="clientId" placeholder="例如: client123">
+            <input type="text" id="clientId" value="client-123">
         </div>
 
         <div class="input-group">
             <label for="username">用户名:</label>
-            <input type="text" id="username" placeholder="输入用户名">
+            <input type="text" id="username" value="your_username">
         </div>
 
         <div class="input-group">
             <label for="password">密码:</label>
-            <input type="password" id="password" placeholder="输入密码">
+            <input type="password" id="password" value="your_password">
         </div>
 
         <div class="input-group">
             <label for="topic">Topic:</label>
-            <input type="text" id="topic" placeholder="例如: test/topic">
+            <input type="text" id="topic" value="your_topic">
         </div>
 
         <div class="input-group">

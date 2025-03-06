@@ -1,24 +1,26 @@
 let client;
-let isConnected = false; // 用于跟踪连接状态
+let isConnected = false;
 
 function connect() {
     const broker = document.getElementById('broker').value;
+    const port = document.getElementById('port').value; // 获取选择的端口
     const clientId = document.getElementById('clientId').value;
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
 
-    client = new Paho.MQTT.Client(broker, clientId);
+    // 创建 MQTT 客户端
+    client = new Paho.MQTT.Client(broker, Number(port), clientId);
 
     client.onConnectionLost = onConnectionLost;
     client.onMessageArrived = onMessageArrived;
 
-    // 设置连接选项（包括用户名和密码）
+    // 设置连接选项
     const connectOptions = {
         onSuccess: onConnect,
         onFailure: onFailure,
         userName: username,
         password: password,
-        useSSL: broker.startsWith('wss://') // 如果Broker地址是wss://，则启用SSL
+        useSSL: port === "8883" // 如果端口是 8883，则启用 SSL
     };
 
     client.connect(connectOptions);
@@ -90,7 +92,7 @@ function disconnect() {
 
 function clearMessages() {
     const messageLog = document.getElementById('messageLog');
-    messageLog.innerHTML = ""; // 清空所有消息
+    messageLog.innerHTML = "";
 }
 
 function updateConnectionStatus(status) {
@@ -102,26 +104,21 @@ function logMessage(message, topic) {
     const messageLog = document.getElementById('messageLog');
     const li = document.createElement('li');
 
-    // 显示时间
     const time = document.createElement('div');
     time.className = 'time';
     time.textContent = new Date().toLocaleTimeString();
     li.appendChild(time);
 
-    // 显示主题
     const topicElement = document.createElement('div');
     topicElement.className = 'topic';
     topicElement.textContent = "主题: " + topic;
     li.appendChild(topicElement);
 
-    // 显示消息内容
     const content = document.createElement('div');
     content.className = 'content';
     content.textContent = message;
     li.appendChild(content);
 
     messageLog.appendChild(li);
-
-    // 自动滚动到底部
     messageLog.scrollTop = messageLog.scrollHeight;
 }
