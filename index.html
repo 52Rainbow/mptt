@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MQTT 消息测试</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        .button-group {
+            margin-top: 20px;
+        }
+        .button-group button {
+            padding: 10px 20px;
+            margin-right: 10px;
+        }
+        .messages {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            height: 200px;
+            overflow-y: scroll;
+        }
+        .messages ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .messages li {
+            margin-bottom: 10px;
+            padding: 5px;
+            border-bottom: 1px solid #eee;
+        }
+        .messages li:last-child {
+            border-bottom: none;
+        }
+        .messages .time {
+            font-size: 0.8em;
+            color: #666;
+        }
+        .messages .topic {
+            font-weight: bold;
+            color: #333;
+        }
+        .messages .content {
+            color: #000;
+        }
+        .status {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>MQTT 消息测试</h1>
+        
+        <div class="input-group">
+            <label for="broker">MQTT Broker:</label>
+            <input type="text" id="broker" placeholder="例如: ws://broker.hivemq.com:8000/mqtt">
+        </div>
+
+        <div class="input-group">
+            <label for="clientId">Client ID:</label>
+            <input type="text" id="clientId" placeholder="例如: client123">
+        </div>
+
+        <div class="input-group">
+            <label for="username">用户名:</label>
+            <input type="text" id="username" placeholder="输入用户名">
+        </div>
+
+        <div class="input-group">
+            <label for="password">密码:</label>
+            <input type="password" id="password" placeholder="输入密码">
+        </div>
+
+        <div class="input-group">
+            <label for="topic">Topic:</label>
+            <input type="text" id="topic" placeholder="例如: test/topic">
+        </div>
+
+        <div class="input-group">
+            <label for="message">Message:</label>
+            <input type="text" id="message" placeholder="输入要发布的消息">
+        </div>
+
+        <div class="button-group">
+            <button onclick="connect()">连接</button>
+            <button onclick="subscribe()">订阅</button>
+            <button onclick="publish()">发布</button>
+            <button onclick="disconnect()">断开连接</button>
+            <button onclick="clearMessages()">清除消息</button>
+        </div>
+
+        <div class="status">
+            <h3>连接状态:</h3>
+            <p id="connectionStatus">未连接</p>
+        </div>
+
+        <div class="messages">
+            <h3>消息日志:</h3>
+            <ul id="messageLog"></ul>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js"></script>
+    <script src="mqtt.js"></script>
+</body>
+</html>
